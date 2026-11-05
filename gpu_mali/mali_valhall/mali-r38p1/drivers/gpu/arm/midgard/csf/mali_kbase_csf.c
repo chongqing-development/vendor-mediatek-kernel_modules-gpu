@@ -1737,7 +1737,10 @@ int kbase_csf_ctx_init(struct kbase_context *kctx)
 	int err = -ENOMEM;
 
 #if IS_ENABLED(CONFIG_MALI_MTK_PENDING_SUBMISSION_MODE)
-	struct sched_param param = { .sched_priority = 0 /*MAX_RT_PRIO - 1*/ };
+	/* #ifdef OPLUS_FEATURE_DISPLAY */
+	/* set pending_submission_work_kthread priority to 100 */
+	/* struct sched_param param = { .sched_priority = 0 }; */
+	/* #endif */ /* OPLUS_FEATURE_DISPLAY */
 	u32 pending_submission_mode = GPU_PENDING_SUBMISSION_KWORKER;
 	struct device_node *np;
 
@@ -1809,7 +1812,11 @@ int kbase_csf_ctx_init(struct kbase_context *kctx)
 							}
 						} else {
 							/* kthread_bind(kctx->csf.pending_submission_work, 0); */
-							sched_setscheduler_nocheck(kctx->csf.pending_submission_work_kthread, SCHED_NORMAL, &param);
+							/* #ifdef OPLUS_FEATURE_DISPLAY */
+							/* set pending_submission_work_kthread priority to 100 */
+							/* sched_setscheduler_nocheck(kctx->csf.pending_submission_work_kthread, SCHED_NORMAL, &param); */
+							set_user_nice(kctx->csf.pending_submission_work_kthread, -20);
+							/* #endif */ /* OPLUS_FEATURE_DISPLAY */
 						}
 					}else {
 						INIT_WORK(&kctx->csf.pending_submission_work,
