@@ -51,4 +51,5 @@ endif ## CONFIG_MALI_MTK_RECLAIM_POLICY ##
 ccflags-y += -I$(srctree)/drivers/devfreq/
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/perf_common/
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/tinysys_scmi/
+ccflags-y += -I$(srctree)/mm/oplus_mm/mm_osvelte/
 ccflags-y += -Wno-unused-variable
